@@ -1,13 +1,13 @@
+DROP TABLE IF EXISTS startups_products;
 DROP TABLE IF EXISTS startups CASCADE;
 DROP TABLE IF EXISTS products CASCADE;
-DROP TABLE IF EXISTS startups_products CASCADE;
 
 CREATE TABLE startups (
   id SERIAL PRIMARY KEY NOT NULL,
   email TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
-  hear_back_date DATE NOT NULL,
+  hear_back_date DATE NOT NULL CHECK (hear_back_date > now()),
   num_employees INTEGER,
   ceo_name TEXT,
   referred_by TEXT
