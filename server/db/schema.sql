@@ -1,10 +1,10 @@
-DROP TABLE IF EXISTS startups;
-DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS startups CASCADE;
+DROP TABLE IF EXISTS products CASCADE;
 DROP TABLE IF EXISTS startups_products CASCADE;
 
 CREATE TABLE startups (
   id SERIAL PRIMARY KEY NOT NULL,
-  email TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
   hear_back_date DATE NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE startups (
 
 CREATE TABLE products (
   id SERIAL PRIMARY KEY NOT NULL,
-  name TEXT NOT NULL,
+  name TEXT NOT NULL UNIQUE,
   description TEXT NOT NULL,
   go_live_date DATE NOT NULL,
   logo TEXT

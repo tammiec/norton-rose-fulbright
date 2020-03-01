@@ -16,7 +16,11 @@ app.get("/", (req, res) => {
 });
 
 app.get('/products', (req, res) => {
-  db.getProducts().then(prods => res.send(prods));
+  db.getProducts()
+    .then(prods => res.send(prods))
+    .catch(err => {
+      res.send(err);
+    });
 })
 
 app.listen(PORT, () => {
