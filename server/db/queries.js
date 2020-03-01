@@ -18,7 +18,7 @@ const createProduct = (name, description, goLiveDate) => {
     INSERT INTO products (name, description, go_live_date)
     VALUES ($1, $2, $3);
   `, vars)
-    .then(res => res.rows)
+    .then(res => res)
     .catch(error => {
       throw error;
     });
@@ -32,7 +32,7 @@ const updateProduct = (oldName, newName, description, goLiveDate) => {
     SET name = $1, description = $2, go_live_date = $3
     WHERE name = $4;
   `, vars)
-    .then(res => res.rows)
+    .then(res => res)
     .catch(error => {
       throw error;
     });
@@ -44,7 +44,7 @@ const deleteProduct = name => {
   return db.query(`
     DELETE FROM products 
     WHERE name = $1;
-  `, vars).then(res => res.rows)
+  `, vars).then(res => res)
     .catch(error => {
       throw error;
     });
