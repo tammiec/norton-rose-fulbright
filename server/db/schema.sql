@@ -23,5 +23,6 @@ CREATE TABLE products (
 
 CREATE TABLE startups_products (
   product_id INTEGER REFERENCES products(id) ON DELETE CASCADE NOT NULL,
-  startup_id INTEGER REFERENCES startups(id) ON DELETE CASCADE NOT NULL
+  startup_id INTEGER REFERENCES startups(id) ON DELETE CASCADE NOT NULL,
+  UNIQUE (product_id, startup_id)
 );

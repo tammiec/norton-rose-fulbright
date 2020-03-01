@@ -11,8 +11,8 @@ const getProducts = () => {
     });
 };
 
-const createProduct = (name, description, goLiveDate) => {
-  const vars = [name, description, goLiveDate];
+const createProduct = (name, description, go_live_date) => {
+  const vars = [name, description, go_live_date];
 
   return db.query(`
     INSERT INTO products (name, description, go_live_date)
@@ -25,8 +25,8 @@ const createProduct = (name, description, goLiveDate) => {
     });
 };
 
-const updateProduct = (oldName, newName, description, goLiveDate) => {
-  const vars = [newName, description, goLiveDate, oldName];
+const updateProduct = (oldName, newName, description, go_live_date) => {
+  const vars = [newName, description, go_live_date, oldName];
   
   return db.query(`
     UPDATE products
@@ -46,17 +46,62 @@ const deleteProduct = name => {
   return db.query(`
     DELETE FROM products 
     WHERE name = $1;
-  `, vars).then(res => res)
+  `, vars)
+    .then(res => res)
     .catch(error => {
       throw error;
     });
 };
 
-// const 
+const createStartup = (email, name, description, hear_back_date, num_employees, ceo_name, referred_by) => {
+  const vars = [email, name, description, hear_back_date, num_employees, ceo_name, referred_by];
+
+  return db.query(`
+    INSERT INTO startups (email, name, description, hear_back_date, num_employees, ceo_name, referred_by)
+    VALUES($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *;
+  `, vars)
+    .then(res => res.rows)
+    .catch(error => {
+      throw error;
+    });
+};
+
+const updateStartup = (email, name, description, hear_back_date, num_employees, ceo_name, referred_by) => {
+  const vars = [email, name, description, hear_back_date, num_employees, ceo_name, referred_by];
+
+  return db.query(`
+    UPDATE startups
+    SET email = $1, description = $3, hear_back_date = $4, num_employees = $5, ceo_name = $6, referred_by = $7
+    WHERE name = $2
+    RETURNING *;
+  `, vars)
+    .then(res => res.rows)
+    .catch(error => {
+      throw error;
+    });
+};
+
+const createStartupProductPair = (product_id, startup_id) => {
+  const vars = [product_id, startup_id];
+
+  return db.query(`
+    INSERT INTO startups_products (product_id, startup_id)
+    VALUES ($1, $2)
+    RETURNING *;
+  `, vars)
+    .then(res => res.rows)
+    .catch(error => {
+      throw error;
+    });
+};
 
 module.exports = {
   getProducts,
   createProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  createStartup,
+  updateStartup,
+  createStartupProductPair
 }
