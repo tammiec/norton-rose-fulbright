@@ -72,8 +72,8 @@ const updateStartup = (email, name, description, hear_back_date, num_employees, 
 
   return db.query(`
     UPDATE startups
-    SET email = $1, description = $3, hear_back_date = $4, num_employees = $5, ceo_name = $6, referred_by = $7
-    WHERE name = $2
+    SET name = $2, description = $3, hear_back_date = $4, num_employees = $5, ceo_name = $6, referred_by = $7
+    WHERE email = $1
     RETURNING *;
   `, vars)
     .then(res => res.rows)
