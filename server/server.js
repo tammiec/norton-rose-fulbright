@@ -11,8 +11,12 @@ const app = express();
 app.use((bodyParser.urlencoded({extended: true})));
 
 // root directory
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   res.send('App is now running!');
+});
+
+app.post('/submit', (req, res) => {
+  
 });
 
 app.get('/products', (req, res) => {
@@ -31,11 +35,19 @@ app.post('/products', (req, res) => {
     .catch(err => {
       if (err.code === '23505') {
         db.updateProduct(req.query.name, req.query.name, req.query.description, req.query.go_live_date)
-          .then(dbRes => console.log(dbRes))
-          .catch(err => console.log(err));
+          .then(dbRes => res.send(dbRes))
+          .catch(err => {
+            console.log('err:', err);
+            res.send(err);
+          });
       }
-      return res.send(err);
     });
+});
+
+app.delete('/products/:name', (req, res) => {
+  db.deleteProduct(req.params.name)
+    .then(dbRes => res.send(dbRes))
+    .catch(err => res.send(err));
 });
 
 app.listen(PORT, () => {

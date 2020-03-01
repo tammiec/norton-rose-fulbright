@@ -16,9 +16,10 @@ const createProduct = (name, description, goLiveDate) => {
 
   return db.query(`
     INSERT INTO products (name, description, go_live_date)
-    VALUES ($1, $2, $3);
+    VALUES ($1, $2, $3)
+    RETURNING *;
   `, vars)
-    .then(res => res)
+    .then(res => res.rows)
     .catch(error => {
       throw error;
     });
@@ -30,9 +31,10 @@ const updateProduct = (oldName, newName, description, goLiveDate) => {
   return db.query(`
     UPDATE products
     SET name = $1, description = $2, go_live_date = $3
-    WHERE name = $4;
+    WHERE name = $4
+    RETURNING *;
   `, vars)
-    .then(res => res)
+    .then(res => res.rows)
     .catch(error => {
       throw error;
     });
@@ -49,6 +51,8 @@ const deleteProduct = name => {
       throw error;
     });
 };
+
+// const 
 
 module.exports = {
   getProducts,
